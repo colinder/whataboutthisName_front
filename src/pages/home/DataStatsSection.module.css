@@ -1,0 +1,73 @@
+.statsSection {
+  width: 100%;
+  padding: 80px 0 250px;
+}
+
+.statsTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-cblack);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.sourceWrapper {
+  width: 798px;
+  margin: 0 auto;
+  text-align: right;
+  margin-bottom: 16px;
+}
+@media (max-width: 798px) {
+  .sourceWrapper {
+    width: 100%;
+    text-align: center;
+    padding: 0 20px;
+  }
+}
+
+.statsSource {
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.8);
+}
+
+.cardWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  max-width: 798px;
+  margin: 0 auto;
+}
+
+.card {
+  width: 254px;
+  height: 80px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.8);
+}
+
+.cardValue {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-cblack);
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cardValue:hover {
+  transform: scale(1.05);
+}
