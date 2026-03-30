@@ -1,0 +1,60 @@
+.section {
+  width: 100%;
+  max-width: 760px;
+  padding-top: 160px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-cblack);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.6);
+  margin-bottom: 24px;
+}
+
+.yearTabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.yearTab {
+  padding: 6px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 40, 55, 0.2);
+  background: #ffffff;
+  color: rgba(31, 40, 55, 0.5);
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(31, 40, 55, 0.15);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.yearTab:hover {
+  box-shadow: 0 4px 12px rgba(31, 40, 55, 0.25);
+}
+
+.yearTab:active {
+  box-shadow: 0 1px 3px rgba(31, 40, 55, 0.15);
+  transform: translateY(1px);
+}
+
+.activeTab {
+  background: var(--color-cblack);
+  color: #ffffff;
+  border-color: var(--color-cblack);
+}
+
+.calendarWrapper {
+  width: 100%;
+  overflow-x: auto;
+}

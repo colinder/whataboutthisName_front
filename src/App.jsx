@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import GNB from "./components/layout/GNB";
 import Footer from "./components/layout/Footer";
-import { Home, Stats } from "./pages";
+import { Home, Stats, SearchResult } from "./pages";
 import "./styles/index.css";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="popLayout">
       <motion.div
         key={location.pathname}
         initial={{ opacity: 0 }}
@@ -20,6 +20,7 @@ const AnimatedRoutes = () => {
       >
         <Routes location={location}>
           <Route path="/" element={<Home />} />
+          <Route path="/result/:name" element={<SearchResult />} />
           <Route path="/stats" element={<Stats />} />
         </Routes>
       </motion.div>

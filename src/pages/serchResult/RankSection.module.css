@@ -1,0 +1,126 @@
+.section {
+  width: 100%;
+  max-width: 760px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-cblack);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.6);
+  margin-bottom: 24px;
+}
+
+.bold {
+  font-weight: 700;
+  color: var(--color-cblack);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffffff;
+  padding: 10px 12px;
+  text-align: center;
+  background-color: rgba(31, 40, 55, 0.75);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.th:last-child {
+  border-right: none;
+}
+
+.thSub {
+  font-size: 12px;
+  font-weight: 400;
+  color: #ffffff;
+  padding: 8px 12px;
+  text-align: center;
+  background-color: rgba(31, 40, 55, 0.55);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.thSub:last-child {
+  border-right: none;
+}
+
+.td {
+  font-size: 13px;
+  padding: 10px 12px;
+  text-align: center;
+  border-bottom: 0.5px solid rgba(31, 40, 55, 0.1);
+  color: var(--color-cblack);
+}
+
+.tr:hover {
+  background-color: rgba(31, 40, 55, 0.03);
+}
+
+.year {
+  font-weight: 500;
+  color: rgba(31, 40, 55, 0.6);
+}
+
+.thMale {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  padding: 10px 12px;
+  text-align: center;
+  background-color: var(--color-male);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.thFemale {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  padding: 10px 12px;
+  text-align: center;
+  background-color: var(--color-female);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.thSubMale {
+  font-size: 12px;
+  font-weight: 400;
+  color: #ffffff;
+  padding: 8px 12px;
+  text-align: center;
+  background-color: var(--color-male);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.thSubFemale {
+  font-size: 12px;
+  font-weight: 400;
+  color: #ffffff;
+  padding: 8px 12px;
+  text-align: center;
+  background-color: var(--color-female);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.badgeMale {
+  background: #e6f1fb;
+  color: var(--color-male);
+}
+
+.badgeFemale {
+  background: #fbeaf0;
+  color: var(--color-female);
+}

@@ -1,0 +1,31 @@
+.section {
+  width: 100%;
+  max-width: 760px;
+  padding-top: 60px;
+}
+
+.nameBox {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.name {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color-cblack);
+}
+
+.hanja {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.5);
+}
+
+.meaning {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.7);
+  line-height: 1.6;
+}
