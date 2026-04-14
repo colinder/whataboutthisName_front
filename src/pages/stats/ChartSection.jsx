@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -6,19 +6,10 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
+import config from "../../config";
 import styles from "./ChartSection.module.css";
-
-const currentYear = new Date().getFullYear();
-
-const yearlyData = Array.from({ length: currentYear - 2008 + 1 }, (_, i) => ({
-  year: 2008 + i,
-  전체: Math.floor(Math.random() * 500000 + 300000),
-  남아: Math.floor(Math.random() * 250000 + 150000),
-  여아: Math.floor(Math.random() * 250000 + 150000),
-}));
 
 const LINES = ["전체", "남아", "여아"];
 const getColor = (key) => {
@@ -28,11 +19,30 @@ const getColor = (key) => {
 };
 
 const ChartSection = () => {
+  const [yearlyData, setYearlyData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState({
     전체: true,
     남아: true,
     여아: true,
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${config.API_URL}/search/yearly`);
+        const json = await res.json();
+        setYearlyData(json.data);
+      } catch (err) {
+        console.error("연도별 통계 조회 실패:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const toggleLine = (key) => {
     setVisible((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -40,7 +50,6 @@ const ChartSection = () => {
 
   return (
     <div className={styles.section}>
-      {/* 차트 1 */}
       <div className={styles.chartBlock}>
         <h2 className={styles.title}>연도별 출생아 수 추이</h2>
         <p className={styles.subtitle}>
@@ -50,7 +59,9 @@ const ChartSection = () => {
           {LINES.map((key) => (
             <button
               key={key}
-              className={`${styles.toggleBtn} ${visible[key] ? styles.activeBtn : ""}`}
+              className={`${styles.toggleBtn} ${
+                visible[key] ? styles.activeBtn : ""
+              }`}
               style={
                 visible[key]
                   ? {
@@ -66,49 +77,56 @@ const ChartSection = () => {
           ))}
         </div>
 
-        <ResponsiveContainer width="100%" height={320}>
-          <LineChart
-            data={yearlyData}
-            margin={{ top: 8, right: 16, left: 0, bottom: 0 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(31,40,55,0.1)" />
-            <XAxis
-              dataKey="year"
-              tick={{ fontSize: 12, fill: "rgba(31,40,55,0.5)" }}
-            />
-            <YAxis
-              tick={{ fontSize: 12, fill: "rgba(31,40,55,0.5)" }}
-              tickFormatter={(v) => v.toLocaleString()}
-            />
-            <Tooltip formatter={(v) => v.toLocaleString()} />
+        <div style={{ minHeight: "320px" }}>
+          {loading ? (
+            <p className={styles.loading}>불러오는 중...</p>
+          ) : (
+            <ResponsiveContainer width="100%" height={320}>
+              <LineChart
+                data={yearlyData}
+                margin={{ top: 8, right: 16, left: 0, bottom: 0 }}
+              >
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="rgba(31,40,55,0.1)"
+                />
+                <XAxis
+                  dataKey="year"
+                  tick={{ fontSize: 12, fill: "rgba(31,40,55,0.5)" }}
+                />
+                <YAxis
+                  tick={{ fontSize: 12, fill: "rgba(31,40,55,0.5)" }}
+                  tickFormatter={(v) => v.toLocaleString()}
+                />
+                <Tooltip formatter={(v) => v.toLocaleString()} />
+                {LINES.map((key) =>
+                  visible[key] ? (
+                    <Line
+                      key={key}
+                      type="monotone"
+                      dataKey={key}
+                      stroke={getColor(key)}
+                      strokeWidth={2}
+                      dot={false}
+                      activeDot={{ r: 4 }}
+                    />
+                  ) : null
+                )}
+              </LineChart>
+            </ResponsiveContainer>
+          )}
+        </div>
 
-            {LINES.map((key) =>
-              visible[key] ? (
-                <Line
-                  key={key}
-                  type="monotone"
-                  dataKey={key}
-                  stroke={getColor(key)}
-                  strokeWidth={2}
-                  dot={false}
-                  activeDot={{ r: 4 }}
-                />
-              ) : null,
-            )}
-          </LineChart>
-        </ResponsiveContainer>
         <div className={styles.legendGroup}>
-          {["전체", "남아", "여아"]
-            .filter((key) => visible[key])
-            .map((key) => (
-              <div key={key} className={styles.legendItem}>
-                <span
-                  className={styles.legendDot}
-                  style={{ backgroundColor: getColor(key) }}
-                />
-                <span>{key}</span>
-              </div>
-            ))}
+          {LINES.filter((key) => visible[key]).map((key) => (
+            <div key={key} className={styles.legendItem}>
+              <span
+                className={styles.legendDot}
+                style={{ backgroundColor: getColor(key) }}
+              />
+              <span>{key}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
