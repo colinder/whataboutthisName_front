@@ -1,0 +1,197 @@
+.center {
+  text-align: center;
+}
+
+.section {
+  width: 100%;
+  max-width: 760px;
+}
+
+.filterBar {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filterLabel {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.6);
+}
+
+.select {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(31, 40, 55, 0.2);
+  background: #ffffff;
+  color: var(--color-cblack);
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.genderGroup {
+  display: flex;
+  gap: 6px;
+}
+
+.genderBtn {
+  padding: 6px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 40, 55, 0.2);
+  background: #ffffff;
+  color: rgba(31, 40, 55, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(31, 40, 55, 0.15);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.genderBtn:hover {
+  box-shadow: 0 4px 12px rgba(31, 40, 55, 0.25);
+}
+
+.genderBtn:active {
+  box-shadow: 0 1px 3px rgba(31, 40, 55, 0.15);
+  transform: translateY(1px);
+}
+
+.active {
+  background: var(--color-cblack);
+  color: #ffffff;
+  border-color: var(--color-cblack);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(31, 40, 55, 0.6);
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(31, 40, 55, 0.2);
+  text-align: left;
+}
+
+.td {
+  font-size: 14px;
+  padding: 10px 12px;
+  border-bottom: 0.5px solid rgba(31, 40, 55, 0.1);
+  color: var(--color-cblack);
+  text-align: left;
+}
+
+.rank {
+  font-weight: 500;
+  color: rgba(31, 40, 55, 0.5);
+  width: 48px;
+}
+
+.right {
+  text-align: right;
+}
+
+.badgeMale {
+  background: #e6f1fb;
+  color: #0c447c;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.badgeFemale {
+  background: #fbeaf0;
+  color: #72243e;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.moreBtn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(31, 40, 55, 0.2);
+  background: #f6f7f8;
+  color: rgba(31, 40, 55, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.moreBtn:hover {
+  background: rgba(31, 40, 55, 0.08);
+}
+
+.notice {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.8);
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.pageBtn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(31, 40, 55, 0.2);
+  background: #ffffff;
+  color: rgba(31, 40, 55, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: rgba(31, 40, 55, 0.08);
+}
+
+.pageBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.activePage {
+  background: var(--color-cblack);
+  color: #ffffff;
+  border-color: var(--color-cblack);
+}
+
+.thMale {
+  background-color: var(--color-male);
+}
+
+.thFemale {
+  background-color: var(--color-female);
+}
+
+.thSubMale {
+  background-color: rgba(24, 95, 165, 0.7);
+}
+
+.thSubFemale {
+  background-color: rgba(153, 53, 86, 0.7);
+}

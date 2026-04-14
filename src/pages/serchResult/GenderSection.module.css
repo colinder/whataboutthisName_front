@@ -1,0 +1,68 @@
+.section {
+  width: 100%;
+  max-width: 760px;
+  padding-top: 100px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-cblack);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.6);
+  margin-bottom: 24px;
+}
+
+.bold {
+  font-weight: 700;
+  color: var(--color-cblack);
+}
+
+.chartWrapper {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.statsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.statLabel {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-cblack);
+  width: 36px;
+}
+
+.statValue {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-cblack);
+}
+
+.statPercent {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.5);
+}

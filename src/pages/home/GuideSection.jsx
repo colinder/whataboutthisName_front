@@ -35,9 +35,9 @@ const GuideSection = () => {
     <div className={styles.guideSection}>
       <div className={styles.guideHeader}>
         <h2 className={styles.guideTitle}>검색 방법</h2>
-        <p className={styles.guideSubtitle}>
+        {/* <p className={styles.guideSubtitle}>
           다양한 방법으로 검색할 수 있습니다.
-        </p>
+        </p> */}
       </div>
       <div className={styles.cardWrapper}>
         {guides.map((guide) => (

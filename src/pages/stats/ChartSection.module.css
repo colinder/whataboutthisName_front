@@ -1,0 +1,138 @@
+.section {
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 160px;
+  padding-top: 160px;
+}
+
+.chartBlock {
+  width: 100%;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-cblack);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(31, 40, 55, 0.6);
+  margin-bottom: 20px;
+}
+
+.toggleGroup {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.toggleBtn {
+  padding: 6px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--color-cblack);
+  background: #ffffff;
+  color: var(--color-cblack);
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(31, 40, 55, 0.15);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.toggleBtn:hover {
+  box-shadow: 0 4px 12px rgba(31, 40, 55, 0.25);
+}
+
+.toggleBtn:active {
+  box-shadow: 0 1px 3px rgba(31, 40, 55, 0.15);
+  transform: translateY(1px);
+}
+
+.activeBtn {
+  color: #ffffff;
+}
+
+.searchRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.input {
+  margin-left: 20px;
+  flex: 1;
+  padding: 8px 20px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: var(--color-cblack);
+  background: #f6f7f8;
+}
+
+.input::placeholder {
+  color: rgba(31, 40, 55, 0.4);
+}
+
+.searchBtn {
+  padding: 8px 20px;
+  border-radius: 14px;
+  border: 1px solid var(--color-cblack);
+  background: var(--color-cblack);
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(31, 40, 55, 0.15);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.searchBtn:hover {
+  box-shadow: 0 4px 12px rgba(31, 40, 55, 0.25);
+}
+
+.searchBtn:active {
+  box-shadow: 0 1px 3px rgba(31, 40, 55, 0.15);
+  transform: translateY(1px);
+}
+
+.searchedLabel {
+  padding-top: 20px;
+  font-size: 15px;
+  color: rgba(31, 40, 55, 0.7);
+  margin-bottom: 12px;
+}
+
+.bold {
+  font-weight: 700;
+  color: var(--color-cblack);
+}
+
+.legendGroup {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--color-cblack);
+  justify-content: center;
+}
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legendDot {
+  width: 12px;
+  height: 3px;
+  border-radius: 2px;
+  display: inline-block;
+}

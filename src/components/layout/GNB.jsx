@@ -5,23 +5,26 @@ import Button from "../ui/Button";
 const GNB = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const buttonWidth = 60;
+
+  const isHome =
+    location.pathname === "/" || location.pathname.startsWith("/result");
+  const isStats = location.pathname === "/stats";
 
   return (
     <nav className={styles.gnb}>
       <div className={styles.gnbInner}>
         <Button
           label="홈"
-          width={buttonWidth}
+          width={74}
           height={36}
-          reversed={location.pathname !== "/"}
+          reversed={!isHome}
           onClick={() => navigate("/")}
         />
         <Button
           label="통계"
-          width={buttonWidth}
+          width={74}
           height={36}
-          reversed={location.pathname !== "/stats"}
+          reversed={!isStats}
           onClick={() => navigate("/stats")}
         />
       </div>

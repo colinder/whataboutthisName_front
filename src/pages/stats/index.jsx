@@ -1,5 +1,16 @@
+import styles from "./Stats.module.css";
+import RankingSection from "./RankingSection";
+import ChartSection from "./ChartSection";
+import CalendarSection from "./CalendarSection";
+
 const Stats = () => {
-  return <div>통계 콘텐츠</div>;
+  return (
+    <div className={styles.container}>
+      <RankingSection />
+      <ChartSection />
+      <CalendarSection />
+    </div>
+  );
 };
 
 export default Stats;
