@@ -1,41 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import config from "../../config";
 import styles from "./RankingSection.module.css";
 
 const PAGE_SIZE = 40;
-const MAX_COUNT = 200;
-
 const currentYear = new Date().getFullYear();
 const years = Array.from(
   { length: currentYear - 2008 + 1 },
-  (_, i) => currentYear - i,
+  (_, i) => currentYear - i
 );
-
-const allData = Array.from({ length: MAX_COUNT }, (_, i) => ({
-  name: "민준",
-  gender: i % 2 === 0 ? "남" : "여",
-  count: Math.floor(Math.random() * 10000),
-}));
-// eslint-disable-next-line no-unused-vars
-const maleData = Array.from({ length: MAX_COUNT }, (_, i) => ({
-  name: "민준",
-  gender: "남",
-  count: Math.floor(Math.random() * 10000),
-}));
-// eslint-disable-next-line no-unused-vars
-const femaleData = Array.from({ length: MAX_COUNT }, (_, i) => ({
-  name: "서연",
-  gender: "여",
-  count: Math.floor(Math.random() * 10000),
-}));
-
-const getRankedData = (data) =>
-  [...data]
-    .sort((a, b) => b.count - a.count)
-    .map((item, i) => ({
-      ...item,
-      rank: i + 1,
-      count: item.count.toLocaleString("ko-KR"),
-    }));
 
 const getGenderColor = (g) => {
   if (g === "남자") return "var(--color-male)";
@@ -48,26 +20,62 @@ const RankingSection = () => {
   const [year, setYear] = useState("전체");
   const [month, setMonth] = useState("전체");
   const [gender, setGender] = useState("전체");
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [availableMonths, setAvailableMonths] = useState([]);
 
-  const getSourceData = () => {
-    if (gender === "남자") return getRankedData(maleData);
-    if (gender === "여자") return getRankedData(femaleData);
-    return getRankedData(allData);
+  // 데이터 조회
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        if (year !== "전체") params.append("year", year);
+        if (month !== "전체") params.append("month", parseInt(month));
+        if (gender !== "전체") params.append("gender", gender);
+        params.append("limit", "200");
+        params.append("exclude_etc", true);
+
+        const res = await fetch(
+          `${config.API_URL}/search/statistics?${params.toString()}`
+        );
+        const json = await res.json();
+
+        setData(json.data || []);
+
+        // 필터 옵션 업데이트
+        if (json.filters?.options) {
+          setAvailableMonths(json.filters.options.months || []);
+        }
+      } catch (err) {
+        console.error("통계 조회 실패:", err);
+        setData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [year, month, gender]);
+
+  // 연도 변경 시 월 초기화
+  const handleYearChange = (e) => {
+    setYear(e.target.value);
+    setMonth("전체");
+    setPage(1);
   };
 
-  const filtered = getSourceData();
+  const handleMonthChange = (e) => {
+    setMonth(e.target.value);
+    setPage(1);
+  };
 
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const totalPages = Math.ceil(data.length / PAGE_SIZE);
+  const paginated = data.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const handlePageChange = (p) => {
     setPage(p);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleFilterChange = (setter) => (e) => {
-    setter(e.target.value);
-    setPage(1);
   };
 
   return (
@@ -80,11 +88,13 @@ const RankingSection = () => {
           <select
             className={styles.select}
             value={year}
-            onChange={handleFilterChange(setYear)}
+            onChange={handleYearChange}
           >
             <option>전체</option>
             {years.map((y) => (
-              <option key={y}>{y}</option>
+              <option key={y} value={y}>
+                {y}
+              </option>
             ))}
           </select>
         </div>
@@ -93,11 +103,16 @@ const RankingSection = () => {
           <select
             className={styles.select}
             value={month}
-            onChange={handleFilterChange(setMonth)}
+            onChange={handleMonthChange}
           >
             <option>전체</option>
-            {Array.from({ length: 12 }, (_, i) => (
-              <option key={i + 1}>{i + 1}월</option>
+            {(availableMonths.length > 0
+              ? availableMonths
+              : Array.from({ length: 12 }, (_, i) => i + 1)
+            ).map((m) => (
+              <option key={m} value={m}>
+                {m}월
+              </option>
             ))}
           </select>
         </div>
@@ -107,7 +122,9 @@ const RankingSection = () => {
             {["전체", "남자", "여자"].map((g) => (
               <button
                 key={g}
-                className={`${styles.genderBtn} ${gender === g ? styles.active : ""}`}
+                className={`${styles.genderBtn} ${
+                  gender === g ? styles.active : ""
+                }`}
                 style={
                   gender === g
                     ? {
@@ -128,60 +145,72 @@ const RankingSection = () => {
         </div>
       </div>
 
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th className={styles.th}>순위</th>
-            <th className={styles.th}>이름</th>
-            <th className={styles.th}>성별</th>
-            <th className={`${styles.th} ${styles.right}`}>등록 수</th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginated.map((item) => (
-            <tr key={item.rank}>
-              <td className={`${styles.td} ${styles.rank}`}>{item.rank}</td>
-              <td className={styles.td}>{item.name}</td>
-              <td className={styles.td}>
-                <span
-                  className={
-                    item.gender === "남" ? styles.badgeMale : styles.badgeFemale
-                  }
-                >
-                  {item.gender}
-                </span>
-              </td>
-              <td className={`${styles.td} ${styles.right}`}>{item.count}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div className={styles.pagination}>
-        <button
-          className={styles.pageBtn}
-          onClick={() => handlePageChange(page - 1)}
-          disabled={page === 1}
-        >
-          이전
-        </button>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-          <button
-            key={p}
-            className={`${styles.pageBtn} ${page === p ? styles.activePage : ""}`}
-            onClick={() => handlePageChange(p)}
-          >
-            {p}
-          </button>
-        ))}
-        <button
-          className={styles.pageBtn}
-          onClick={() => handlePageChange(page + 1)}
-          disabled={page === totalPages}
-        >
-          다음
-        </button>
+      <div style={{ minHeight: "400px" }}>
+        {loading ? (
+          <p className={styles.loading}>불러오는 중...</p>
+        ) : (
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th className={styles.th}>순위</th>
+                <th className={styles.th}>이름</th>
+                <th className={`${styles.th} ${styles.right}`}>등록 수</th>
+              </tr>
+            </thead>
+            <tbody>
+              {paginated.length > 0 ? (
+                paginated.map((item) => (
+                  <tr key={item.rank}>
+                    <td className={`${styles.td} ${styles.rank}`}>
+                      {item.rank}
+                    </td>
+                    <td className={styles.td}>{item.name}</td>
+                    <td className={`${styles.td} ${styles.right}`}>
+                      {item.total_count.toLocaleString("ko-KR")}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className={styles.td} colSpan={3}>
+                    조회된 데이터가 없습니다.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
+
+      {totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.pageBtn}
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page === 1}
+          >
+            이전
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+            <button
+              key={p}
+              className={`${styles.pageBtn} ${
+                page === p ? styles.activePage : ""
+              }`}
+              onClick={() => handlePageChange(p)}
+            >
+              {p}
+            </button>
+          ))}
+          <button
+            className={styles.pageBtn}
+            onClick={() => handlePageChange(page + 1)}
+            disabled={page === totalPages}
+          >
+            다음
+          </button>
+        </div>
+      )}
     </div>
   );
 };

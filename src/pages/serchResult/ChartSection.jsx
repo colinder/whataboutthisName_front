@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -8,16 +8,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import config from "../../config";
 import styles from "./ChartSection.module.css";
-
-const currentYear = new Date().getFullYear();
-
-const yearlyData = Array.from({ length: currentYear - 2008 + 1 }, (_, i) => ({
-  year: 2008 + i,
-  전체: Math.floor(Math.random() * 500000 + 300000),
-  남아: Math.floor(Math.random() * 250000 + 150000),
-  여아: Math.floor(Math.random() * 250000 + 150000),
-}));
 
 const LINES = ["전체", "남아", "여아"];
 
@@ -27,29 +19,56 @@ const getColor = (key) => {
   return "var(--color-female)";
 };
 
-const ChartSection = () => {
+const ChartSection = ({ name }) => {
+  const [yearlyData, setYearlyData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState({
     전체: true,
     남아: true,
     여아: true,
   });
 
+  useEffect(() => {
+    if (!name) return;
+
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `${config.API_URL}/search/name-trend/${encodeURIComponent(name)}`
+        );
+        const json = await res.json();
+        setYearlyData(json.data || []);
+      } catch (err) {
+        console.error("이름 추이 조회 실패:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [name]);
+
   const toggleLine = (key) => {
     setVisible((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  if (!name) return null;
+
   return (
     <div className={styles.section}>
       <div className={styles.chartBlock}>
-        <h2 className={styles.title}>연도별 출생아 수 추이</h2>
+        <h2 className={styles.title}>연도별 추이</h2>
         <p className={styles.subtitle}>
-          2008년부터 현재까지 전체 · 남아 · 여아 등록 수
+          <span className={styles.bold}>{name}</span> 이름의 연도별 전체 · 남아 · 여아 등록 수
         </p>
         <div className={styles.toggleGroup}>
           {LINES.map((key) => (
             <button
               key={key}
-              className={`${styles.toggleBtn} ${visible[key] ? styles.activeBtn : ""}`}
+              className={`${styles.toggleBtn} ${
+                visible[key] ? styles.activeBtn : ""
+              }`}
               style={
                 visible[key]
                   ? {
@@ -65,53 +84,63 @@ const ChartSection = () => {
           ))}
         </div>
 
-        <ResponsiveContainer width="100%" height={320}>
-          <LineChart
-            data={yearlyData}
-            margin={{ top: 8, right: 16, left: 0, bottom: 0 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(31,40,55,0.1)" />
-            <XAxis
-              dataKey="year"
-              tick={{ fontSize: 12, fill: "rgba(31,40,55,0.5)" }}
-            />
-            <YAxis
-              tick={{ fontSize: 12, fill: "rgba(31,40,55,0.5)" }}
-              tickFormatter={(v) => v.toLocaleString()}
-            />
-            <Tooltip
-              formatter={(v) => v.toLocaleString()}
-              itemSorter={(item) =>
-                ["전체", "남아", "여아"].indexOf(item.dataKey)
-              }
-            />
-            {LINES.map((key) =>
-              visible[key] ? (
-                <Line
-                  key={key}
-                  type="monotone"
-                  dataKey={key}
-                  stroke={getColor(key)}
-                  strokeWidth={3}
-                  dot={false}
-                  activeDot={{ r: 4 }}
+        <div style={{ minHeight: "320px" }}>
+          {loading ? (
+            <p className={styles.loading}>불러오는 중...</p>
+          ) : yearlyData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={320}>
+              <LineChart
+                data={yearlyData}
+                margin={{ top: 8, right: 16, left: 0, bottom: 0 }}
+              >
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="rgba(31,40,55,0.1)"
                 />
-              ) : null,
-            )}
-          </LineChart>
-        </ResponsiveContainer>
+                <XAxis
+                  dataKey="year"
+                  tick={{ fontSize: 12, fill: "rgba(31,40,55,0.5)" }}
+                />
+                <YAxis
+                  tick={{ fontSize: 12, fill: "rgba(31,40,55,0.5)" }}
+                  tickFormatter={(v) => v.toLocaleString()}
+                />
+                <Tooltip
+                  formatter={(v) => `${v.toLocaleString()}명`}
+                  itemSorter={(item) =>
+                    ["전체", "남아", "여아"].indexOf(item.dataKey)
+                  }
+                />
+                {LINES.map((key) =>
+                  visible[key] ? (
+                    <Line
+                      key={key}
+                      type="monotone"
+                      dataKey={key}
+                      stroke={getColor(key)}
+                      strokeWidth={3}
+                      dot={false}
+                      activeDot={{ r: 4 }}
+                    />
+                  ) : null
+                )}
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            <p className={styles.empty}>데이터가 없습니다.</p>
+          )}
+        </div>
+
         <div className={styles.legendGroup}>
-          {["전체", "남아", "여아"]
-            .filter((key) => visible[key])
-            .map((key) => (
-              <div key={key} className={styles.legendItem}>
-                <span
-                  className={styles.legendDot}
-                  style={{ backgroundColor: getColor(key) }}
-                />
-                <span>{key}</span>
-              </div>
-            ))}
+          {LINES.filter((key) => visible[key]).map((key) => (
+            <div key={key} className={styles.legendItem}>
+              <span
+                className={styles.legendDot}
+                style={{ backgroundColor: getColor(key) }}
+              />
+              <span>{key}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
