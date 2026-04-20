@@ -57,3 +57,71 @@
 .searchButton:hover {
   transform: scale(1.2);
 }
+
+
+
+/* 로딩 메시지 */
+.loadingMessage {
+  text-align: center;
+  padding: 5rem 2rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+/* 데이터 없음 메시지 */
+.noDataMessage {
+  text-align: center;
+  padding: 5rem 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.noDataIcon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.noDataTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.nameHighlight {
+  color: #4a90e2;
+}
+
+.noDataDescription {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.noDataHint {
+  font-size: 0.95rem;
+  color: #999;
+  line-height: 1.8;
+  text-align: left;
+  display: inline-block;
+  background: #f8f9fa;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  border-left: 4px solid #4a90e2;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .noDataIcon {
+    font-size: 3rem;
+  }
+
+  .noDataTitle {
+    font-size: 1.4rem;
+  }
+
+  .noDataDescription {
+    font-size: 1rem;
+  }
+}

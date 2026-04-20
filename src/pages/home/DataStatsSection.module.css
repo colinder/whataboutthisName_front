@@ -72,3 +72,20 @@
 .cardValue:hover {
   transform: scale(1.05);
 }
+
+/* 노트 문구 (상위 20위 기준, 대법원 공식 집계) */
+.cardNote {
+  font-size: 0.75rem;
+  color: #999;
+  margin: 0.5rem 0 0 0;
+  font-weight: 400;
+}
+
+/* 로딩 상태 */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.1rem;
+  color: #666;
+  grid-column: 1 / -1;  /* 전체 그리드 너비 차지 */
+}
