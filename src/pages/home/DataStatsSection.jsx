@@ -71,7 +71,15 @@ const DataStatsSection = () => {
       <h2 className={styles.statsTitle}>데이터 현황</h2>
       <div className={styles.sourceWrapper}>
         <p className={styles.statsSource}>
-          *출처: 대한민국 대법원 전자가족관계등록시스템
+          *출처:{" "}
+          <a
+            href="https://stfamily.scourt.go.kr/st/StFrrStatcsView.do?pgmId=090000000025"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.sourceLink}
+          >
+            대한민국 대법원 전자가족관계등록시스템
+          </a>
         </p>
       </div>
 
