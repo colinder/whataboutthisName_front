@@ -1,0 +1,226 @@
+.section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.queryHighlight {
+  color: #4a90e2;
+}
+
+.resultCount {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.resultCount strong {
+  color: #4a90e2;
+  font-weight: 700;
+}
+
+/* 결과 없음 */
+.noResults {
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+.noResultsIcon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.noResultsText {
+  font-size: 1.3rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.noResultsHint {
+  font-size: 1rem;
+  color: #999;
+}
+
+/* 결과 그리드 - 가로 최대 10개 */
+.resultsGrid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 0.5rem;
+}
+
+.resultCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.75rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+  min-height: 40px;
+}
+
+.resultCard:hover {
+  background: #e8f4fd;
+  border-color: #4a90e2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
+}
+
+.resultName {
+  font-size: 0.875rem; /* 14px */
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resultArrow {
+  font-size: 0.875rem;
+  color: #4a90e2;
+  opacity: 0;
+  transition: opacity 0.2s;
+  margin-left: 0.4rem;
+  flex-shrink: 0;
+}
+
+.resultCard:hover .resultArrow {
+  opacity: 1;
+}
+
+/* 반응형 - 세밀한 조정 */
+
+/* 2000px 이상 - 큰 모니터 */
+@media (min-width: 2000px) {
+  .resultsGrid {
+    grid-template-columns: repeat(12, 1fr); /* 12개 */
+  }
+}
+
+/* 1600px ~ 1999px - 일반 큰 모니터 */
+@media (max-width: 1999px) {
+  .resultsGrid {
+    grid-template-columns: repeat(10, 1fr); /* 10개 */
+  }
+}
+
+/* 1400px ~ 1599px */
+@media (max-width: 1599px) {
+  .resultsGrid {
+    grid-template-columns: repeat(8, 1fr); /* 8개 */
+  }
+}
+
+/* 1200px ~ 1399px */
+@media (max-width: 1399px) {
+  .resultsGrid {
+    grid-template-columns: repeat(7, 1fr); /* 7개 */
+  }
+}
+
+/* 1024px ~ 1199px - 작은 데스크톱 */
+@media (max-width: 1199px) {
+  .resultsGrid {
+    grid-template-columns: repeat(6, 1fr); /* 6개 */
+  }
+}
+
+/* 900px ~ 1023px */
+@media (max-width: 1023px) {
+  .resultsGrid {
+    grid-template-columns: repeat(5, 1fr); /* 5개 */
+  }
+}
+
+/* 768px ~ 899px - 태블릿 */
+@media (max-width: 899px) {
+  .resultsGrid {
+    grid-template-columns: repeat(4, 1fr); /* 4개 */
+  }
+  
+  .section {
+    padding: 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .resultName {
+    font-size: 0.8rem; /* 약간 더 작게 */
+  }
+}
+
+/* 600px ~ 767px */
+@media (max-width: 767px) {
+  .resultsGrid {
+    grid-template-columns: repeat(3, 1fr); /* 3개 */
+  }
+  
+  .resultCard {
+    padding: 0.6rem 0.65rem;
+  }
+}
+
+/* 480px ~ 599px - 큰 모바일 */
+@media (max-width: 599px) {
+  .resultsGrid {
+    grid-template-columns: repeat(3, 1fr); /* 3개 유지 */
+  }
+  
+  .section {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 1.3rem;
+  }
+  
+  .resultName {
+    font-size: 0.75rem;
+  }
+}
+
+/* 400px ~ 479px - 작은 모바일 */
+@media (max-width: 479px) {
+  .resultsGrid {
+    grid-template-columns: repeat(2, 1fr); /* 2개 */
+    gap: 0.4rem;
+  }
+  
+  .resultCard {
+    padding: 0.55rem 0.6rem;
+  }
+  
+  .resultName {
+    font-size: 0.75rem;
+  }
+}
+
+/* 360px 이하 - 매우 작은 모바일 */
+@media (max-width: 360px) {
+  .resultsGrid {
+    grid-template-columns: repeat(2, 1fr); /* 2개 유지 */
+    gap: 0.3rem;
+  }
+  
+  .resultCard {
+    padding: 0.5rem;
+    min-height: 36px;
+  }
+  
+  .resultName {
+    font-size: 0.7rem;
+  }
+}
