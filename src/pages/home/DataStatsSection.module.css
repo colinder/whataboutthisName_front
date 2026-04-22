@@ -87,7 +87,7 @@
   padding: 3rem;
   font-size: 1.1rem;
   color: #666;
-  grid-column: 1 / -1;  /* 전체 그리드 너비 차지 */
+  grid-column: 1 / -1; /* 전체 그리드 너비 차지 */
 }
 
 .sourceLink {
@@ -107,7 +107,7 @@
 }
 
 .sourceLink::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -121,7 +121,6 @@
   width: 100%;
 }
 
-
 /* 로딩 컨테이너 */
 .loadingContainer {
   grid-column: 1 / -1;
@@ -134,7 +133,7 @@
 /* 로딩 텍스트 */
 .loadingText {
   display: inline-flex;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 500;
   color: #333; /* 검정색 계열로 변경 */
 }
@@ -149,15 +148,11 @@
 @keyframes dropFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-10px);
   }
   50% {
     opacity: 1;
     transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(20px);
   }
 }
 

@@ -35,7 +35,7 @@ const ChartSection = ({ name }) => {
       setLoading(true);
       try {
         const res = await fetch(
-          `${config.API_URL}/search/name-trend/${encodeURIComponent(name)}`
+          `${config.API_URL}/search/name-trend/${encodeURIComponent(name)}`,
         );
         const json = await res.json();
         setYearlyData(json.data || []);
@@ -60,7 +60,8 @@ const ChartSection = ({ name }) => {
       <div className={styles.chartBlock}>
         <h2 className={styles.title}>연도별 추이</h2>
         <p className={styles.subtitle}>
-          <span className={styles.bold}>{name}</span> 이름의 연도별 전체 · 남아 · 여아 등록 수
+          <span className={styles.bold}>{name}</span> 이름의 연도별 전체 · 남아
+          · 여아 등록 수
         </p>
         <div className={styles.toggleGroup}>
           {LINES.map((key) => (
@@ -86,7 +87,21 @@ const ChartSection = ({ name }) => {
 
         <div style={{ minHeight: "320px" }}>
           {loading ? (
-            <p className={styles.loading}>불러오는 중...</p>
+            <div className={styles.loadingContainer}>
+              <div className={styles.loadingText}>
+                {"불러오는 중입니다.".split("").map((char, index) => (
+                  <span
+                    key={index}
+                    className={styles.loadingChar}
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
+                    }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
+              </div>
+            </div>
           ) : yearlyData.length > 0 ? (
             <ResponsiveContainer width="100%" height={320}>
               <LineChart
@@ -122,7 +137,7 @@ const ChartSection = ({ name }) => {
                       dot={false}
                       activeDot={{ r: 4 }}
                     />
-                  ) : null
+                  ) : null,
                 )}
               </LineChart>
             </ResponsiveContainer>
