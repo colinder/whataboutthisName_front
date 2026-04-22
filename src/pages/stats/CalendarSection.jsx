@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { ActivityCalendar } from "react-activity-calendar";
 import styles from "./CalendarSection.module.css";
+import cstyles from "../Common.module.css";
 import config from "../../config";
 
 const { API_URL } = config;
 const currentYear = new Date().getFullYear();
 const years = Array.from(
   { length: currentYear - 2008 + 1 },
-  (_, i) => currentYear - i
+  (_, i) => currentYear - i,
 );
 
 const CalendarSection = () => {
@@ -21,7 +22,7 @@ const CalendarSection = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `${API_URL}/search/crawl-status?year=${selectedYear}`
+          `${API_URL}/search/crawl-status?year=${selectedYear}`,
         );
         const json = await res.json();
 
@@ -91,31 +92,43 @@ const CalendarSection = () => {
 
       <div className={styles.calendarWrapper} style={{ minHeight: "200px" }}>
         {loading ? (
-          <p className={styles.loading}>불러오는 중...</p>
+          <div className={cstyles.loadingContainer}>
+            <div className={cstyles.loadingText}>
+              {"불러오는 중입니다.".split("").map((char, index) => (
+                <span
+                  key={index}
+                  className={cstyles.loadingChar}
+                  style={{
+                    animationDelay: `${index * 0.1}s`,
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
+            </div>
+          </div>
         ) : (
           calendarData.length > 0 && (
             <ActivityCalendar
               data={calendarData}
               theme={{
-                light: [
-                  "#f6f7f8",
-                  "#c6e48b",
-                  "#7bc96f",
-                  "#239a3b",
-                  "#1F2837",
-                ],
-                dark: [
-                  "#333",
-                  "#0e4429",
-                  "#006d32",
-                  "#26a641",
-                  "#39d353",
-                ],
+                light: ["#f6f7f8", "#c6e48b", "#7bc96f", "#239a3b", "#1F2837"],
+                dark: ["#333", "#0e4429", "#006d32", "#26a641", "#39d353"],
               }}
               labels={{
                 months: [
-                  "1월", "2월", "3월", "4월", "5월", "6월",
-                  "7월", "8월", "9월", "10월", "11월", "12월",
+                  "1월",
+                  "2월",
+                  "3월",
+                  "4월",
+                  "5월",
+                  "6월",
+                  "7월",
+                  "8월",
+                  "9월",
+                  "10월",
+                  "11월",
+                  "12월",
                 ],
                 weekdays: ["일", "월", "화", "수", "목", "금", "토"],
                 totalCount: "{{count}}회 수집 완료",

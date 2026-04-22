@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import config from "../../config";
 import styles from "./RankingSection.module.css";
+import cstyles from "../Common.module.css";
 
 const PAGE_SIZE = 40;
 const currentYear = new Date().getFullYear();
 const years = Array.from(
   { length: currentYear - 2008 + 1 },
-  (_, i) => currentYear - i
+  (_, i) => currentYear - i,
 );
 
 const getGenderColor = (g) => {
@@ -37,7 +38,7 @@ const RankingSection = () => {
         params.append("exclude_etc", true);
 
         const res = await fetch(
-          `${config.API_URL}/search/statistics?${params.toString()}`
+          `${config.API_URL}/search/statistics?${params.toString()}`,
         );
         const json = await res.json();
 
@@ -147,7 +148,21 @@ const RankingSection = () => {
 
       <div style={{ minHeight: "400px" }}>
         {loading ? (
-          <p className={styles.loading}>불러오는 중...</p>
+          <div className={cstyles.loadingContainer}>
+            <div className={cstyles.loadingText}>
+              {"불러오는 중입니다.".split("").map((char, index) => (
+                <span
+                  key={index}
+                  className={cstyles.loadingChar}
+                  style={{
+                    animationDelay: `${index * 0.1}s`,
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
+            </div>
+          </div>
         ) : (
           <table className={styles.table}>
             <thead>
