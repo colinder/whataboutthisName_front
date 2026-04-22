@@ -78,7 +78,8 @@ npm run preview
 
 ## 📁 프로젝트 구조
 
-```whataboutthisName_front/
+```
+whataboutthisName_front/
 ├── public/
 │   ├── robots.txt
 │   ├── sitemap.xml
