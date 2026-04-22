@@ -1,3 +1,8 @@
+# env
+.env
+.env.production
+.env.development
+
 # Logs
 logs
 *.log
@@ -13,6 +18,9 @@ dist-ssr
 *.local
 
 # Editor directories and files
+env/.
+.vscode/
+__pycache__/
 .vscode/*
 !.vscode/extensions.json
 .idea
