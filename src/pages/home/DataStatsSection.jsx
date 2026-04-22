@@ -85,7 +85,21 @@ const DataStatsSection = () => {
 
       <div className={styles.cardWrapper}>
         {loading ? (
-          <p className={styles.loading}>불러오는 중...</p>
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingText}>
+              {"불러오는 중입니다.".split("").map((char, index) => (
+                <span
+                  key={index}
+                  className={styles.loadingChar}
+                  style={{
+                    animationDelay: `${index * 0.1}s`,
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
+            </div>
+          </div>
         ) : (
           stats.map((stat) => (
             <div key={stat.title} className={styles.card}>
