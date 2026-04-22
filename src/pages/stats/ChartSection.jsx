@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import config from "../../config";
 import styles from "./ChartSection.module.css";
+import cstyles from "../Common.module.css";
 
 const LINES = ["전체", "남아", "여아"];
 const getColor = (key) => {
@@ -79,7 +80,21 @@ const ChartSection = () => {
 
         <div style={{ minHeight: "320px" }}>
           {loading ? (
-            <p className={styles.loading}>불러오는 중...</p>
+            <div className={cstyles.loadingContainer}>
+              <div className={cstyles.loadingText}>
+                {"불러오는 중입니다.".split("").map((char, index) => (
+                  <span
+                    key={index}
+                    className={cstyles.loadingChar}
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
+                    }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
+              </div>
+            </div>
           ) : (
             <ResponsiveContainer width="100%" height={320}>
               <LineChart
@@ -110,7 +125,7 @@ const ChartSection = () => {
                       dot={false}
                       activeDot={{ r: 4 }}
                     />
-                  ) : null
+                  ) : null,
                 )}
               </LineChart>
             </ResponsiveContainer>

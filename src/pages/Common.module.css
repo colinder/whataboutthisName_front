@@ -1,0 +1,42 @@
+/* 로딩 컨테이너 */
+.loadingContainer {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding-top: 20px;
+}
+
+/* 로딩 텍스트 */
+.loadingText {
+  display: inline-flex;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #333; /* 검정색 계열로 변경 */
+}
+
+/* 각 글자 애니메이션 - 무한 반복 */
+.loadingChar {
+  display: inline-block;
+  opacity: 0;
+  animation: dropFadeIn 1s ease-out infinite; /* infinite 추가 */
+}
+
+@keyframes dropFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .loadingText {
+    font-size: 1.2rem;
+  }
+}

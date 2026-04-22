@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./DataStatsSection.module.css";
+import cstyles from "../Common.module.css";
 import config from "../../config";
 
 const { API_URL } = config;
@@ -47,7 +48,7 @@ const DataStatsSection = () => {
       },
       {
         title: "업데이트 주기",
-        value: "연 1회",
+        value: "매일",
       },
       {
         title: "최근 업데이트 날짜",
@@ -85,12 +86,12 @@ const DataStatsSection = () => {
 
       <div className={styles.cardWrapper}>
         {loading ? (
-          <div className={styles.loadingContainer}>
-            <div className={styles.loadingText}>
+          <div className={cstyles.loadingContainer}>
+            <div className={cstyles.loadingText}>
               {"불러오는 중입니다.".split("").map((char, index) => (
                 <span
                   key={index}
-                  className={styles.loadingChar}
+                  className={cstyles.loadingChar}
                   style={{
                     animationDelay: `${index * 0.1}s`,
                   }}
