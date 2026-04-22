@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="50" fill="#667eea"/>
+  <circle cx="50" cy="45" r="28" fill="#FFE4C4"/>
+  <circle cx="42" cy="42" r="3" fill="#333"/>
+  <circle cx="58" cy="42" r="3" fill="#333"/>
+  <path d="M 40 52 Q 50 58 60 52" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 30 25 Q 35 18 40 22" stroke="#8B4513" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M 45 20 Q 50 15 55 20" stroke="#8B4513" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M 60 22 Q 65 18 70 25" stroke="#8B4513" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <text x="50" y="80" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">이름</text>
+</svg>
