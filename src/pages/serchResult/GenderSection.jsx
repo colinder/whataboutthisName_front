@@ -24,7 +24,7 @@ const GenderSection = ({ name }) => {
       setLoading(true);
       try {
         const res = await fetch(
-          `${config.API_URL}/search/name-gender/${encodeURIComponent(name)}`
+          `${config.API_URL}/search/name-gender/${encodeURIComponent(name)}`,
         );
         const json = await res.json();
         setFound(json.found);
@@ -56,7 +56,21 @@ const GenderSection = ({ name }) => {
 
       <div style={{ minHeight: "280px" }}>
         {loading ? (
-          <p className={styles.loading}>불러오는 중...</p>
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingText}>
+              {"불러오는 중입니다.".split("").map((char, index) => (
+                <span
+                  key={index}
+                  className={styles.loadingChar}
+                  style={{
+                    animationDelay: `${index * 0.1}s`,
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
+            </div>
+          </div>
         ) : !found ? (
           <p className={styles.empty}>"{name}" 이름의 데이터가 없습니다.</p>
         ) : (
@@ -87,7 +101,8 @@ const GenderSection = ({ name }) => {
                     {item.value.toLocaleString()}
                   </span>
                   <span className={styles.statPercent}>
-                    ({total > 0
+                    (
+                    {total > 0
                       ? ((item.value / total) * 100).toFixed(1)
                       : "0.0"}
                     %)
