@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import config from "../../config";
 import styles from "./ChartSection.module.css";
+import cstyles from "../Common.module.css";
 
 const LINES = ["전체", "남아", "여아"];
 
@@ -87,12 +88,12 @@ const ChartSection = ({ name }) => {
 
         <div style={{ minHeight: "320px" }}>
           {loading ? (
-            <div className={styles.loadingContainer}>
-              <div className={styles.loadingText}>
+            <div className={cstyles.loadingContainer}>
+              <div className={cstyles.loadingText}>
                 {"불러오는 중입니다.".split("").map((char, index) => (
                   <span
                     key={index}
-                    className={styles.loadingChar}
+                    className={cstyles.loadingChar}
                     style={{
                       animationDelay: `${index * 0.1}s`,
                     }}

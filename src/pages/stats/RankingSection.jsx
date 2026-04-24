@@ -81,6 +81,15 @@ const RankingSection = () => {
 
   return (
     <div className={styles.section}>
+      <div className={styles.infoBox}>
+        <p className={styles.infoText}>
+          ℹ️ 대법원 API는 각 조건당 상위 20개 이름만 제공합니다.
+          <br />
+          시도별·성별 데이터를 종합하여 최대한 많은 이름을 수집하고 있으나, 일부
+          이름은 누락될 수 있습니다.
+        </p>
+      </div>
+
       <p className={styles.notice}>최대 상위 200개의 결과만 표시됩니다.</p>
 
       <div className={styles.filterBar}>

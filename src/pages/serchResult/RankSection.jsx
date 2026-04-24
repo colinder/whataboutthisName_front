@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import config from "../../config";
 import styles from "./RankSection.module.css";
+import cstyles from "../Common.module.css";
 
 const RankSection = ({ name }) => {
   const [data, setData] = useState([]);
@@ -42,12 +43,12 @@ const RankSection = ({ name }) => {
 
       <div style={{ minHeight: "300px" }}>
         {loading ? (
-          <div className={styles.loadingContainer}>
-            <div className={styles.loadingText}>
+          <div className={cstyles.loadingContainer}>
+            <div className={cstyles.loadingText}>
               {"불러오는 중입니다.".split("").map((char, index) => (
                 <span
                   key={index}
-                  className={styles.loadingChar}
+                  className={cstyles.loadingChar}
                   style={{
                     animationDelay: `${index * 0.1}s`,
                   }}

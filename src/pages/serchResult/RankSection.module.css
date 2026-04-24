@@ -124,3 +124,9 @@
   background: #fbeaf0;
   color: var(--color-female);
 }
+
+.empty {
+  padding-top: 100px;
+  font-size: 20px;
+  font-weight: 600;
+}

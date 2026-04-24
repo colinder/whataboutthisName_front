@@ -15,24 +15,23 @@ const CalendarSection = () => {
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [calendarData, setCalendarData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [totalDays, setTotalDays] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
+        // ✅ API 경로 변경: /search/calendar
         const res = await fetch(
-          `${API_URL}/search/crawl-status?year=${selectedYear}`,
+          `${API_URL}/search/calendar?year=${selectedYear}`,
         );
-        const json = await res.json();
+        const data = await res.json();
 
-        // ActivityCalendar 형식에 맞게 변환
-        // 시작일과 끝일이 반드시 있어야 함
+        // ✅ 1년치 전체 날짜 생성
         const startDate = `${selectedYear}-01-01`;
         const endDate = `${selectedYear}-12-31`;
 
         const dateMap = {};
-        json.data.forEach((item) => {
+        data.forEach((item) => {
           dateMap[item.date] = item;
         });
 
@@ -44,17 +43,27 @@ const CalendarSection = () => {
         for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
           const dateStr = d.toISOString().split("T")[0];
           const item = dateMap[dateStr];
-          fullData.push({
-            date: dateStr,
-            count: item ? item.count : 0,
-            level: item ? item.level : 0,
-          });
+
+          if (item) {
+            fullData.push({
+              date: dateStr,
+              count: item.display_count, // ✅ display_count 사용 (1)
+              level: item.level,
+              actualCount: item.count, // ✅ 실제 개수 저장 (툴팁용)
+            });
+          } else {
+            fullData.push({
+              date: dateStr,
+              count: 0,
+              level: 0,
+              actualCount: 0,
+            });
+          }
         }
 
         setCalendarData(fullData);
-        setTotalDays(json.total_days);
       } catch (err) {
-        console.error("수집 현황 조회 실패:", err);
+        console.error("캘린더 데이터 로딩 실패:", err);
         setCalendarData([]);
       } finally {
         setLoading(false);
@@ -69,11 +78,6 @@ const CalendarSection = () => {
       <h2 className={styles.title}>데이터 수집 현황</h2>
       <p className={styles.subtitle}>
         데이터가 정상적으로 수집된 날짜를 표시합니다.
-        {/* {totalDays > 0 && (
-          <span className={styles.statusBadge}>
-            {selectedYear}년 {totalDays}일 수집 완료
-          </span>
-        )} */}
       </p>
 
       <div className={styles.yearTabs}>
@@ -112,7 +116,13 @@ const CalendarSection = () => {
             <ActivityCalendar
               data={calendarData}
               theme={{
-                light: ["#f6f7f8", "#c6e48b", "#7bc96f", "#239a3b", "#1F2837"],
+                light: [
+                  "#f6f7f8", // level 0: 미수집
+                  "#c6e48b", // level 1: (사용 안 함)
+                  "#7bc96f", // level 2: (사용 안 함)
+                  "#239a3b", // level 3: 부분 수집 (1~47개 또는 1~50개)
+                  "#1F2837", // level 4: 완전 수집 (48개 이상 또는 51개 이상)
+                ],
                 dark: ["#333", "#0e4429", "#006d32", "#26a641", "#39d353"],
               }}
               labels={{
@@ -131,8 +141,11 @@ const CalendarSection = () => {
                   "12월",
                 ],
                 weekdays: ["일", "월", "화", "수", "목", "금", "토"],
-                totalCount: "{{count}}회 수집 완료",
-                legend: { less: "적음", more: "많음" },
+                totalCount: "총 {{count}}일 수집 완료",
+                legend: {
+                  less: "미수집",
+                  more: "완전수집",
+                },
               }}
               fontSize={13}
               blockSize={14}
