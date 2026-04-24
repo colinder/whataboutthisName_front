@@ -78,3 +78,9 @@
   border-radius: 2px;
   display: inline-block;
 }
+
+.empty {
+  padding-top: 100px;
+  font-size: 20px;
+  font-weight: 600;
+}
