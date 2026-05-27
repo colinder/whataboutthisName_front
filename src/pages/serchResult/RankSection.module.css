@@ -25,6 +25,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 512px;
 }
 
 .th {
@@ -129,4 +130,10 @@
   padding-top: 100px;
   font-size: 20px;
   font-weight: 600;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }

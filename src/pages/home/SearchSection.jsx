@@ -30,22 +30,20 @@ const SearchSection = () => {
         <span className={styles.bold}>어때요?</span>
       </div>
       <motion.div layoutId="search-box" className={styles.searchBox}>
-        <div className={styles.searchBox}>
-          <input
-            ref={inputRef}
-            className={styles.input}
-            type="text"
-            placeholder="이름을 입력해주세요"
-            onKeyDown={handleKeyDown}
-          />
-          <button
-            ref={searchButtonRef}
-            className={styles.searchButton}
-            onClick={handleSearch}
-          >
-            <img src={searchIcon} alt="검색" />
-          </button>
-        </div>
+        <input
+          ref={inputRef}
+          className={styles.input}
+          type="text"
+          placeholder="이름을 입력해주세요"
+          onKeyDown={handleKeyDown}
+        />
+        <button
+          ref={searchButtonRef}
+          className={styles.searchButton}
+          onClick={handleSearch}
+        >
+          <img src={searchIcon} alt="검색" />
+        </button>
       </motion.div>
     </div>
   );
