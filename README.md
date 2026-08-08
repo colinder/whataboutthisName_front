@@ -138,6 +138,78 @@ whataboutthisName_front/
 - 대법원 통계
 - 아기 작명
 
+# 배포 구조 및 방법
+
+## 전체 구조
+
+```
+로컬 개발 (dev 브랜치)
+    ↓ git push
+GitHub (dev 브랜치)
+    ↓ main 브랜치에 머지
+GitHub (main 브랜치)
+    ↓ 자동 감지
+Vercel (자동 배포)
+    ↓
+https://whataboutthisname.vercel.app
+```
+
+---
+
+## 브랜치 전략
+
+| 브랜치 | 용도 |
+|---|---|
+| `main` | 프로덕션 배포 브랜치 (Vercel 연동) |
+| `dev` | 개발 작업 브랜치 |
+
+---
+
+## 배포 방법
+
+### 1. 개발 작업
+
+```bash
+git checkout dev
+# 작업 후
+git add .
+git commit -m "feat: 변경 내용"
+git push origin dev
+```
+
+### 2. 프로덕션 배포
+
+```bash
+git checkout main
+git merge dev
+git push origin main
+```
+
+main 브랜치에 push되면 **Vercel이 자동으로 감지하여 배포**합니다.
+
+---
+
+## 환경변수
+
+Vercel 대시보드 → 프로젝트 → Settings → Environment Variables에서 관리합니다.
+
+| 변수명 | 설명 |
+|---|---|
+| `VITE_API_URL` | 백엔드 API 주소 |
+
+로컬 개발 시 `.env` 파일에 설정:
+
+```
+VITE_API_URL=http://localhost:8080
+```
+
+---
+
+## 배포 확인
+
+- Vercel 대시보드: https://vercel.com/dashboard
+- 배포 URL: https://whataboutthisname.vercel.app
+
 ## 📊 Analytics
 
 - **Google Analytics 4**: 사용자 행동 분석
