@@ -3,8 +3,8 @@ import { ActivityCalendar } from "react-activity-calendar";
 import styles from "./CalendarSection.module.css";
 import cstyles from "../Common.module.css";
 import config from "../../config";
+import Tooltip from '@mui/material/Tooltip';
 
-const { API_URL } = config;
 const currentYear = new Date().getFullYear();
 const years = Array.from(
   { length: currentYear - 2008 + 1 },
@@ -22,7 +22,7 @@ const CalendarSection = () => {
       try {
         // ✅ API 경로 변경: /search/calendar
         const res = await fetch(
-          `${API_URL}/search/calendar?year=${selectedYear}`,
+          `${config.API_URL}/search/calendar?year=${selectedYear}`,
         );
         const data = await res.json();
 
@@ -115,6 +115,19 @@ const CalendarSection = () => {
           calendarData.length > 0 && (
             <ActivityCalendar
               data={calendarData}
+              renderBlock={(block, activity) => (
+                <Tooltip
+                  title={
+                    activity.level === 0
+                      ? `${activity.date} / 미수집`
+                      : `${activity.date} / ${activity.actualCount}건 수집`
+                  }
+                  placement="top"
+                  arrow
+                >
+                  {block}
+                </Tooltip>
+              )}
               theme={{
                 light: [
                   "#f6f7f8", // level 0: 미수집
