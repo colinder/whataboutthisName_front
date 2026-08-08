@@ -25,6 +25,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 512px;
 }
 
 .th {
@@ -129,4 +130,33 @@
   padding-top: 100px;
   font-size: 20px;
   font-weight: 600;
+}
+
+/* .tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+} */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.fadeRight {
+  display: none;
+}
+
+@media (max-width: 512px) {
+  .fadeRight {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgb(223, 223, 223));
+    pointer-events: none;
+  }
 }
