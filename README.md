@@ -5,12 +5,16 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fwhataboutthisname.vercel.app)](https://whataboutthisname.vercel.app)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+---
+
 ## 🌟 주요 기능
 
 - **이름 검색**: 원하는 이름을 검색하여 실제 출생신고 통계 확인
 - **인기 순위**: 연도별, 성별 인기 이름 순위 조회
 - **트렌드 분석**: 이름의 인기 변화 추이를 그래프로 시각화
 - **통계 정보**: 2008년부터 현재까지의 대법원 공식 데이터 제공
+
+---
 
 ## 🚀 기술 스택
 
@@ -19,6 +23,7 @@
 - **Vite** 6.0.11
 - **React Router** 7.1.3
 - **Recharts** - 데이터 시각화
+- **Framer Motion** - 애니메이션
 
 ### Backend
 - **FastAPI** (Python)
@@ -28,13 +33,18 @@
 ### Deployment
 - **Frontend**: Vercel
 - **Backend**: Google Cloud Run
+- **Scheduler**: Google Cloud Scheduler (매일 오전 9시 자동 크롤링)
+
+---
 
 ## 📊 데이터 출처
 
 대한민국 대법원 전자가족관계등록시스템
 - 수집 기간: 2008년 1월 ~ 현재
-- 업데이트 주기: 연 1회
-- 데이터 범위: 성별 상위 20위 이름
+- 업데이트 주기: 매일 자동 수집
+- 데이터 범위: 시도별 × 성별 상위 이름
+
+---
 
 ## 🛠️ 설치 및 실행
 
@@ -45,20 +55,17 @@
 ### 설치
 
 ```bash
-# 저장소 클론
 git clone https://github.com/colinder/whataboutthisName_front.git
 cd whataboutthisName_front
-
-# 의존성 설치
 npm install
 ```
 
-### 환경 변수 설정
+### 환경변수 설정
 
 `.env` 파일 생성:
 
 ```env
-VITE_API_URL=your_api_url_here
+VITE_API_URL=http://localhost:8080
 ```
 
 ### 개발 서버 실행
@@ -76,6 +83,8 @@ npm run build
 npm run preview
 ```
 
+---
+
 ## 📁 프로젝트 구조
 
 ```
@@ -83,42 +92,74 @@ whataboutthisName_front/
 ├── public/
 │   ├── robots.txt
 │   ├── sitemap.xml
-│   └── vite.svg
+│   └── favicon.svg
 ├── src/
 │   ├── assets/
 │   ├── components/
-│   │   ├── DataStatsSection.jsx
-│   │   ├── Footer.jsx
-│   │   ├── SearchBox.jsx
-│   │   └── ...
 │   ├── pages/
-│   │   ├── home.jsx
-│   │   └── Result.jsx
+│   ├── config.js
 │   ├── App.jsx
 │   ├── main.jsx
-│   └── index.css
+│   └── styles/
 ├── .env
-├── .env.production
-├── .gitignore
 ├── index.html
 ├── package.json
-├── README.md
 └── vite.config.js
+```
 
+---
 
-## 🌐 배포
+## 🚢 배포 구조 및 방법
 
-### Frontend (Vercel)
+### 전체 흐름
 
-**Production URL**: [https://whataboutthisname.vercel.app](https://whataboutthisname.vercel.app)
+```
+로컬 개발 (dev 브랜치)
+    ↓ git push
+GitHub (dev 브랜치)
+    ↓ main 브랜치에 머지
+GitHub (main 브랜치)
+    ↓ 자동 감지
+Vercel (자동 배포)
+    ↓
+https://whataboutthisname.vercel.app
+```
 
-자동 배포:
-- `main` 브랜치 푸시 시 자동 배포
-- PR 생성 시 Preview 배포
+### 브랜치 전략
 
-### Backend (Google Cloud Run)
+| 브랜치 | 용도 |
+|---|---|
+| `main` | 프로덕션 배포 브랜치 (Vercel 연동) |
+| `dev` | 개발 작업 브랜치 |
 
-**API URL**: [https://whataboutthisname-back-534420618793.asia-northeast3.run.app](https://whataboutthisname-back-534420618793.asia-northeast3.run.app)
+### 개발 작업
+
+```bash
+git checkout dev
+git add .
+git commit -m "feat: 변경 내용"
+git push origin dev
+```
+
+### 프로덕션 배포
+
+```bash
+git checkout main
+git merge dev
+git push origin main
+```
+
+main 브랜치에 push되면 Vercel이 자동으로 감지하여 배포합니다.
+
+### 환경변수 관리
+
+Vercel 대시보드 → 프로젝트 → Settings → Environment Variables
+
+| 변수명 | 설명 |
+|---|---|
+| `VITE_API_URL` | 백엔드 API 주소 |
+
+---
 
 ## 📈 SEO 최적화
 
@@ -129,27 +170,14 @@ whataboutthisName_front/
 - ✅ Open Graph 메타 태그
 - ✅ 구조화된 데이터 (JSON-LD)
 
-## 🔍 주요 키워드
-
-- 아기 이름
-- 출생신고 통계
-- 이름 순위
-- 인기 이름
-- 대법원 통계
-- 아기 작명
+---
 
 ## 📊 Analytics
 
 - **Google Analytics 4**: 사용자 행동 분석
 - **Vercel Analytics**: 트래픽 모니터링
 
-## 🤝 기여하기
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+---
 
 ## 📝 License
 
@@ -157,13 +185,7 @@ whataboutthisName_front/
 
 ## 📧 문의
 
-이메일: selfor.official@gmail.com
-
-## 🙏 감사의 말
-
-- 대한민국 대법원 전자가족관계등록시스템
-- React 커뮤니티
-- Vercel
+selfor.official@gmail.com
 
 ---
 

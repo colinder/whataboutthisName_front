@@ -49,7 +49,7 @@ const CalendarSection = () => {
               date: dateStr,
               count: item.display_count, // ✅ display_count 사용 (1)
               level: item.level,
-              actualCount: item.count, // ✅ 실제 개수 저장 (툴팁용)
+              actualCount: item.total_count, // ✅ 실제 개수 저장 (툴팁용)
             });
           } else {
             fullData.push({
